@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/eclipse/paho.golang/packets"
+	"github.com/Franky-W/paho.golang/packets"
 )
 
 var (

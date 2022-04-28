@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eclipse/paho.golang/paho"
+	"github.com/Franky-W/paho.golang/paho"
 )
 
 // Handler is the struct providing a request/response functionality for the paho
@@ -15,19 +15,21 @@ type Handler struct {
 	sync.Mutex
 	c          *paho.Client
 	correlData map[string]chan *paho.Publish
+	resonseTopic string
 }
 
-func NewHandler(c *paho.Client) (*Handler, error) {
+func NewHandler(c *paho.Client, responseTopic string) (*Handler, error) {
 	h := &Handler{
 		c:          c,
 		correlData: make(map[string]chan *paho.Publish),
+		resonseTopic: responseTopic,
 	}
 
-	c.Router.RegisterHandler(fmt.Sprintf("%s/responses", c.ClientID), h.responseHandler)
+	c.Router.RegisterHandler(fmt.Sprintf("%s/%s", responseTopic, c.ClientID), h.responseHandler)
 
 	_, err := c.Subscribe(context.Background(), &paho.Subscribe{
 		Subscriptions: map[string]paho.SubscribeOptions{
-			fmt.Sprintf("%s/responses", c.ClientID): {QoS: 1},
+			fmt.Sprintf("%s/%s", responseTopic, c.ClientID): {QoS: 1},
 		},
 	})
 	if err != nil {
@@ -65,7 +67,7 @@ func (h *Handler) Request(pb *paho.Publish) (*paho.Publish, error) {
 	}
 
 	pb.Properties.CorrelationData = []byte(cID)
-	pb.Properties.ResponseTopic = fmt.Sprintf("%s/responses", h.c.ClientID)
+	pb.Properties.ResponseTopic = fmt.Sprintf("%s/%s", h.resonseTopic, h.c.ClientID)
 	pb.Retain = false
 
 	_, err := h.c.Publish(context.Background(), pb)

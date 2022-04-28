@@ -14,8 +14,8 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/eclipse/paho.golang/packets"
-	"github.com/eclipse/paho.golang/paho"
+	"github.com/Franky-W/paho.golang/packets"
+	"github.com/Franky-W/paho.golang/paho"
 )
 
 // Network (establishing connection) functionality for AutoPaho

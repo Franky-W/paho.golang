@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/eclipse/paho.golang/paho"
+	"github.com/Franky-W/paho.golang/paho"
 )
 
 func TestClientConfig_buildConnectPacket(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/eclipse/paho.golang/packets"
+	"github.com/Franky-W/paho.golang/packets"
 )
 
 func TestAcksTracker(t *testing.T) {

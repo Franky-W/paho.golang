@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eclipse/paho.golang/packets"
+	"github.com/Franky-W/paho.golang/packets"
 	"golang.org/x/sync/semaphore"
 )
 
